@@ -1,2 +1,3 @@
 # MyProductService
-This the project which I have developed while doing my master in scaler academy
+
+This is the project I developed during my Master of Science in Computer Science from Woolf University, in collaboration with Scaler Neovarsity.
