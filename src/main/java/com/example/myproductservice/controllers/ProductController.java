@@ -7,6 +7,9 @@ import com.example.myproductservice.services.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
 public class ProductController {
 
@@ -16,18 +19,30 @@ public class ProductController {
     @GetMapping("/products/{id}")
     public ProductDto getProductDetails(@PathVariable Long id) {
         Product product = iProductService.getProductById(id);
-        System.out.println("Product details:::"+ product);
         if(product == null) return null;
         return from(product);
     }
 
     @GetMapping("/products")
-    public ProductDto getAllProducts() {
-        return null;
+    public List<ProductDto> getAllProducts() {
+        System.out.println("All Products:::"+ iProductService.getAllProducts());
+        List<ProductDto> productDto = new ArrayList<>();
+        List<Product> productList = iProductService.getAllProducts();
+
+        for(Product product : productList) {
+            productDto.add(from(product));
+        }
+
+        return productDto;
     }
 
     @PatchMapping("/products/{id}")
     public ProductDto updateProduct(@PathVariable Long id, @RequestBody ProductDto productDto) {
+        return null;
+    }
+
+    @PutMapping("/products/{id}")
+    public ProductDto replaceProduct(@PathVariable Long id, @RequestBody ProductDto productDto) {
         return null;
     }
 
@@ -56,5 +71,11 @@ public class ProductController {
             productDto.setCategory(categoryDto);
         }
         return productDto;
+    }
+
+    private Product from(ProductDto productDto) {
+        Product product = new Product();
+        product.setName(productDto.getName());
+        return  product;
     }
 }
